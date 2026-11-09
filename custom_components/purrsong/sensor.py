@@ -955,6 +955,14 @@ class LastSeen(CoordinatorEntity, SensorEntity):
 
 
 class LastUsed(CoordinatorEntity, SensorEntity):
+    @property
+    def extra_state_attributes(self) -> dict[str, Any]:
+        """Return extra state attributes for the last litter box visit."""
+
+        return {
+            "cat": self.device_data.last_cat_used_name,
+            "duration": f"{round(self.device_data.last_used_duration)}s",
+        }
     """ Representation of last date/time litter box was used by a cat """
 
     def __init__(self, coordinator, device_id):
